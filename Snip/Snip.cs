@@ -179,11 +179,9 @@ namespace Winter
 
             this.toolStripMenuItemSaveSeparateFiles.Checked = Globals.SaveSeparateFiles;
             this.toolStripMenuItemSaveAlbumArtwork.Checked = Globals.SaveAlbumArtwork;
-            this.toolStripMenuItemKeepSpotifyAlbumArtwork.Checked = Globals.KeepSpotifyAlbumArtwork;
 
             this.ToggleArtwork(Globals.ArtworkResolution);
 
-            this.toolStripMenuItemCacheSpotifyMetadata.Checked = Globals.CacheSpotifyMetadata;
             this.toolStripMenuItemSaveHistory.Checked = Globals.SaveHistory;
             this.toolStripMenuItemDisplayTrackPopup.Checked = Globals.DisplayTrackPopup;
             this.toolStripMenuItemEmptyFileIfNoTrackPlaying.Checked = Globals.EmptyFileIfNoTrackPlaying;
@@ -225,10 +223,6 @@ namespace Winter
             {
                 this.TogglePlayer(Globals.MediaPlayerSelection.NoPlayer);
             }
-            else if (sender == this.toolStripMenuItemSpotify)
-            {
-                this.TogglePlayer(Globals.MediaPlayerSelection.Spotify);
-            }
             else if (sender == this.toolStripMenuItemItunes)
             {
                 this.TogglePlayer(Globals.MediaPlayerSelection.Itunes);
@@ -238,7 +232,6 @@ namespace Winter
         private void TogglePlayer(Globals.MediaPlayerSelection player)
         {
             this.toolStripMenuItemNoPlayer.Checked   = player == Globals.MediaPlayerSelection.NoPlayer;
-            this.toolStripMenuItemSpotify.Checked    = player == Globals.MediaPlayerSelection.Spotify;
             this.toolStripMenuItemItunes.Checked     = player == Globals.MediaPlayerSelection.Itunes;
 
             Globals.CurrentPlayer.Unload();
@@ -249,10 +242,6 @@ namespace Winter
                 case Globals.MediaPlayerSelection.NoPlayer:
                     Globals.CurrentPlayer = new NoPlayer();
                     playerName = LocalizedMessages.NoPlayer;
-                    break;
-                case Globals.MediaPlayerSelection.Spotify:
-                    Globals.CurrentPlayer = new Spotify();
-                    playerName = LocalizedMessages.Spotify;
                     break;
                 case Globals.MediaPlayerSelection.Itunes:
                     Globals.CurrentPlayer = new Itunes();
@@ -290,18 +279,6 @@ namespace Winter
         {
             this.toolStripMenuItemSaveAlbumArtwork.Checked = !this.toolStripMenuItemSaveAlbumArtwork.Checked;
             Globals.SaveAlbumArtwork = this.toolStripMenuItemSaveAlbumArtwork.Checked;
-        }
-
-        private void ToolStripMenuItemKeepSpotifyAlbumArtwork_Click(object sender, EventArgs e)
-        {
-            this.toolStripMenuItemKeepSpotifyAlbumArtwork.Checked = !this.toolStripMenuItemKeepSpotifyAlbumArtwork.Checked;
-            Globals.KeepSpotifyAlbumArtwork = this.toolStripMenuItemKeepSpotifyAlbumArtwork.Checked;
-        }
-
-        private void ToolStripMenuItemCacheSpotifyMetadata_Click(object sender, EventArgs e)
-        {
-            this.toolStripMenuItemCacheSpotifyMetadata.Checked = !this.toolStripMenuItemCacheSpotifyMetadata.Checked;
-            Globals.CacheSpotifyMetadata = this.toolStripMenuItemCacheSpotifyMetadata.Checked;
         }
 
         private void ToolStripMenuItemSaveHistory_Click(object sender, EventArgs e)
