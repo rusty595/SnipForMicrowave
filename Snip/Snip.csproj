@@ -193,7 +193,6 @@
     <Content Include="Resources\Strings.nb-NO.txt" />
     <Content Include="Resources\Strings.sv-SE.txt" />
     <Content Include="Resources\Strings.txt" />
-    <Content Include="Resources\Strings.fr-FR.txt" />
     <Content Include="Resources\Strings.nl-NL.txt" />
     <Content Include="Resources\Strings.zh-TW.txt" />
   </ItemGroup>

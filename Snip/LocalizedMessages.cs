@@ -25,7 +25,6 @@ namespace Winter
         public static string SnipForm { get; set; }
         public static string NewVersionAvailable { get; set; }
         public static string NoPlayer { get; set; }
-        public static string Spotify { get; set; }
         public static string Itunes { get; set; }
         public static string SwitchedToPlayer { get; set; }
         public static string PlayerIsNotRunning { get; set; }
@@ -33,11 +32,9 @@ namespace Winter
         public static string SetOutputFormat { get; set; }
         public static string SaveInformationSeparately { get; set; }
         public static string SaveAlbumArtwork { get; set; }
-        public static string KeepSpotifyAlbumArtwork { get; set; }
         public static string ImageResolutionSmall { get; set; }
         public static string ImageResolutionMedium { get; set; }
         public static string ImageResolutionLarge { get; set; }
-        public static string CacheSpotifyMetadata { get; set; }
         public static string SaveTrackHistory { get; set; }
         public static string DisplayTrackPopup { get; set; }
         public static string EmptyFile { get; set; }

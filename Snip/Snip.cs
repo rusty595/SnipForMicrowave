@@ -87,7 +87,6 @@ namespace Winter
             LocalizedMessages.SnipForm = Globals.ResourceManager.GetString("SnipForm");
             LocalizedMessages.NewVersionAvailable = Globals.ResourceManager.GetString("NewVersionAvailable");
             LocalizedMessages.NoPlayer = Globals.ResourceManager.GetString("NoPlayer");
-            LocalizedMessages.Spotify = Globals.ResourceManager.GetString("Spotify");
             LocalizedMessages.Itunes = Globals.ResourceManager.GetString("Itunes");
             LocalizedMessages.SwitchedToPlayer = Globals.ResourceManager.GetString("SwitchedToPlayer");
             LocalizedMessages.PlayerIsNotRunning = Globals.ResourceManager.GetString("PlayerIsNotRunning");
@@ -95,11 +94,9 @@ namespace Winter
             LocalizedMessages.SetOutputFormat = Globals.ResourceManager.GetString("SetOutputFormat");
             LocalizedMessages.SaveInformationSeparately = Globals.ResourceManager.GetString("SaveInformationSeparately");
             LocalizedMessages.SaveAlbumArtwork = Globals.ResourceManager.GetString("SaveAlbumArtwork");
-            LocalizedMessages.KeepSpotifyAlbumArtwork = Globals.ResourceManager.GetString("KeepSpotifyAlbumArtwork");
             LocalizedMessages.ImageResolutionSmall = Globals.ResourceManager.GetString("ImageResolutionSmall");
             LocalizedMessages.ImageResolutionMedium = Globals.ResourceManager.GetString("ImageResolutionMedium");
             LocalizedMessages.ImageResolutionLarge = Globals.ResourceManager.GetString("ImageResolutionLarge");
-            LocalizedMessages.CacheSpotifyMetadata = Globals.ResourceManager.GetString("CacheSpotifyMetadata");
             LocalizedMessages.SaveTrackHistory = Globals.ResourceManager.GetString("SaveTrackHistory");
             LocalizedMessages.DisplayTrackPopup = Globals.ResourceManager.GetString("DisplayTrackPopup");
             LocalizedMessages.EmptyFile = Globals.ResourceManager.GetString("EmptyFile");

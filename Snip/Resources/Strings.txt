@@ -12,7 +12,6 @@ NewVersionAvailable=New Version Available!
 
 ; Supported media players.
 NoPlayer=No Player Selected
-Spotify=Spotify
 Itunes=iTunes
 
 ; This text is saved to the Snip.txt file when the user switches media players
@@ -46,23 +45,11 @@ SaveInformationSeparately=Save Information Separately
 ; harddrive.
 SaveAlbumArtwork=Save Album Artwork
 
-; This text is displayed on the right-click context menu and, when enabled,
-; will save the artwork to a subdirectory using the trackid information
-; provided by Spotify as the filename.  Each track will save its own album
-; artwork and the next time that track is played it will use the saved file
-; instead of redownloading it each time.
-KeepSpotifyAlbumArtwork=Keep Spotify Album Artwork
-
 ; These texts are displayed under a sub-menu of "Keep Spotify Album Artwork"
 ; and it refers to the image resolution of the artwork to be downloaded.
 ImageResolutionSmall=Small
 ImageResolutionMedium=Medium
 ImageResolutionLarge=Large
-
-; This option is used to enable caching the JSON metadata that Snip
-; downloads from Spotify. It allows Snip to read the data straight from the
-; saved cache instead of downloading it each time.
-CacheSpotifyMetadata=Cache Spotify Metadata
 
 ; This text is displayed on the right-click context menu and, when enabled,
 ; will create a file called Snip_History.txt where it will append each track
