@@ -5,11 +5,6 @@
 ; Main application name.
 SnipForm=Snip
 
-; This text appears in place of the Snip version in the right-click context
-; menu when there is a new version of Snip available.
-; Let's sound excited!
-NewVersionAvailable=有新版本!
-
 ; Supported media players.
 NoPlayer=No Player Selected
 Itunes=iTunes

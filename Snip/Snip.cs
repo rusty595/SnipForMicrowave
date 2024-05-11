@@ -69,13 +69,6 @@ namespace Winter
 
             // Register global hotkeys
             this.ToggleHotkeys();
-
-            if (CheckVersion.IsNewVersionAvailable())
-            {
-                this.toolStripMenuItemSnipVersion.Text = LocalizedMessages.NewVersionAvailable;
-                this.toolStripMenuItemSnipVersion.Enabled = true;
-                this.toolStripMenuItemSnipVersion.Click += ToolStripMenuItemSnipVersion_Click;
-            }
         }
 
         #endregion
@@ -85,7 +78,6 @@ namespace Winter
         private static void SetLocalizedMessages()
         {
             LocalizedMessages.SnipForm = Globals.ResourceManager.GetString("SnipForm");
-            LocalizedMessages.NewVersionAvailable = Globals.ResourceManager.GetString("NewVersionAvailable");
             LocalizedMessages.NoPlayer = Globals.ResourceManager.GetString("NoPlayer");
             LocalizedMessages.Itunes = Globals.ResourceManager.GetString("Itunes");
             LocalizedMessages.SwitchedToPlayer = Globals.ResourceManager.GetString("SwitchedToPlayer");

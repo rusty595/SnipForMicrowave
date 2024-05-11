@@ -23,7 +23,6 @@ namespace Winter
     public static class LocalizedMessages
     {
         public static string SnipForm { get; set; }
-        public static string NewVersionAvailable { get; set; }
         public static string NoPlayer { get; set; }
         public static string Itunes { get; set; }
         public static string SwitchedToPlayer { get; set; }
