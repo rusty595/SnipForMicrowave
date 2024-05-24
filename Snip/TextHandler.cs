@@ -24,6 +24,8 @@ namespace Winter
     using System.Globalization;
     using System.IO;
     using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
 
     public static class TextHandler
@@ -75,11 +77,12 @@ namespace Winter
 
                 if (Globals.EmptyFileIfNoTrackPlaying)
                 {
+                    CancelCurrentScroll();
                     File.WriteAllText(@Application.StartupPath + @"\Snip.txt", string.Empty);
                 }
                 else
                 {
-                    File.WriteAllText(@Application.StartupPath + @"\Snip.txt", text);
+                    WriteAllTextAndMaybeScroll(text);
                 }
 
                 if (Globals.EmptyFileIfNoTrackPlaying)
@@ -89,9 +92,33 @@ namespace Winter
                         File.WriteAllText(@Application.StartupPath + @"\Snip_Album.txt", string.Empty);
                         File.WriteAllText(@Application.StartupPath + @"\Snip_Artist.txt", string.Empty);
                         File.WriteAllText(@Application.StartupPath + @"\Snip_Track.txt", string.Empty);
-                        File.WriteAllText(@Application.StartupPath + @"\Snip_TrackId.txt", string.Empty);
+                        //File.WriteAllText(@Application.StartupPath + @"\Snip_TrackId.txt", string.Empty);
                     }
                 }
+            }
+        }
+
+        private static void WriteAllTextAndMaybeScroll(string text)
+        {
+            CancelCurrentScroll();
+            if (TextScrollLengthCap > 0
+                && text.Length > TextScrollLengthCap)
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
+                DoScrollOutput(text, _cancellationTokenSource.Token);
+            }
+            else
+            {
+                File.WriteAllText(@Application.StartupPath + @"\Snip.txt", text);
+            }
+        }
+
+        private static void CancelCurrentScroll()
+        {
+            if (_cancellationTokenSource != null)
+            {
+                _cancellationTokenSource.Cancel();
+				_cancellationTokenSource = null;
             }
         }
 
@@ -105,7 +132,7 @@ namespace Winter
                 SetNotifyIconText(text);
 
                 // Write the song title and artist to a text file.
-                File.WriteAllText(@Application.StartupPath + @"\Snip.txt", text);
+                WriteAllTextAndMaybeScroll(text);
 
                 // Display a popup message of the track.
                 if (Globals.DisplayTrackPopup)
@@ -115,22 +142,7 @@ namespace Winter
             }
         }
 
-        public static void UpdateText(string title, string artist)
-        {
-            UpdateText(title, artist, string.Empty, string.Empty, string.Empty);
-        }
-
-        public static void UpdateText(string title, string artist, string album)
-        {
-            UpdateText(title, artist, album, string.Empty, string.Empty);
-        }
-
-        public static void UpdateText(string title, string artist, string album, string trackId)
-        {
-            UpdateText(title, artist, album, trackId, string.Empty);
-        }
-
-        public static void UpdateText(string title, string artist, string album, string trackId, string json)
+        public static void UpdateText(string title, string artist, string album = "")
         {
             string output = Globals.TrackFormat + Globals.SeparatorFormat + Globals.ArtistFormat;
 
@@ -148,8 +160,8 @@ namespace Winter
                 output = output.Replace(Globals.ArtistVariable, artist);
             }
 
-            output = output.Replace(Globals.NewLineVariable, "\r\n");
-            output = output.Replace(Globals.TrackIdVariable, trackId);
+            output = output.Replace(Globals.NewLineVariable, Environment.NewLine);
+            //output = output.Replace(Globals.TrackIdVariable, trackId);
 
             if (!string.IsNullOrEmpty(album))
             {
@@ -166,7 +178,7 @@ namespace Winter
                 SetNotifyIconText(output);
 
                 // Write the song title and artist to a text file.
-                File.WriteAllText(@Application.StartupPath + @"\Snip.txt", output);
+                WriteAllTextAndMaybeScroll(output);
 
                 // Display a popup message of the track.
                 if (Globals.DisplayTrackPopup)
@@ -204,8 +216,8 @@ namespace Winter
                         File.WriteAllText(@Application.StartupPath + @"\Snip_Album.txt", albumOutput);
                     }
 
-                    File.WriteAllText(@Application.StartupPath + @"\Snip_TrackId.txt", trackId);
-                    File.WriteAllText(@Application.StartupPath + @"\Snip_Metadata.json", json);
+                    //File.WriteAllText(@Application.StartupPath + @"\Snip_TrackId.txt", trackId);
+                    //File.WriteAllText(@Application.StartupPath + @"\Snip_Metadata.json", json);
                 }
 
                 // If saving track history is enabled, append that information to a separate file.
@@ -213,6 +225,62 @@ namespace Winter
                 {
                     File.AppendAllText(@Application.StartupPath + @"\Snip_History.txt", output + Environment.NewLine);
                 }
+            }
+        }
+
+        private static CancellationTokenSource _cancellationTokenSource;
+
+        private const int TextScrollLengthCap = 13;
+
+        private static async void DoScrollOutput(string input, CancellationToken cancellationToken)
+        {
+            string[] inputLines = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            int i = 0;
+            int maxi = 0;
+            string[] outputLines = new string[inputLines.Length];
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                for (int j = 0; j < inputLines.Length; ++j)
+                {
+                    string inputLine = inputLines[j];
+                    if (inputLine.Length > maxi)
+                    {
+                        maxi = inputLine.Length;
+                    }
+
+                    if (inputLine.Length <= TextScrollLengthCap)
+                    {
+						outputLines[j] = inputLines[j];
+                        continue;
+                    }
+
+                    if (i < inputLine.Length)
+                    {
+                        outputLines[j] = inputLine.Substring(i, Math.Min(inputLine.Length - i, TextScrollLengthCap));
+                    }
+                    else
+                    {
+                        outputLines[j] = inputLine.Substring(0, TextScrollLengthCap);
+                    }
+                }
+
+                File.WriteAllLines(@Application.StartupPath + @"\Snip.txt", outputLines);
+
+                if (i == 0)
+                {
+                    await Task.Delay(400);
+                }
+
+                if (i < maxi)
+                {
+                    ++i;
+                }
+                else
+                {
+                    i = 0;
+                }
+
+                await Task.Delay(100);
             }
         }
     }
