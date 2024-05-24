@@ -118,7 +118,7 @@ namespace Winter
             if (_cancellationTokenSource != null)
             {
                 _cancellationTokenSource.Cancel();
-				_cancellationTokenSource = null;
+                _cancellationTokenSource = null;
             }
         }
 
@@ -250,7 +250,7 @@ namespace Winter
 
                     if (inputLine.Length <= TextScrollLengthCap)
                     {
-						outputLines[j] = inputLines[j];
+                        outputLines[j] = inputLines[j];
                         continue;
                     }
 

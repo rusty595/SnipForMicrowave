@@ -20,7 +20,9 @@
 
 namespace Winter
 {
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Windows.Forms;
     using iTunesLib;
 
@@ -118,6 +120,12 @@ namespace Winter
             this.ItunesApplication.Stop();
         }
 
+        private List<string> _nonSortArtists = new List<string>
+        {
+            "μ's",
+            "µThunder"
+        };
+
         private void App_OnPlayerPlayEvent(object sender)
         {
             dynamic track = this.ItunesApplication.CurrentTrack;
@@ -141,8 +149,8 @@ namespace Winter
                 }
 
                 TextHandler.UpdateText(string.IsNullOrEmpty(track.SortName) ? track.Name : track.SortName,
-					string.IsNullOrEmpty(track.SortArtist) ? track.Artist : track.SortArtist,
-					string.IsNullOrEmpty(track.SortAlbum) ? track.Album : track.SortAlbum);
+									   _nonSortArtists.Contains(track.Artist) ? track.Artist : string.IsNullOrEmpty(track.SortArtist) ? track.Artist : track.SortArtist,
+									   string.IsNullOrEmpty(track.SortAlbum) ? track.Album : track.SortAlbum);
             }
             else if (string.IsNullOrEmpty(track.Artist) && !string.IsNullOrEmpty(track.Name) && string.IsNullOrEmpty(this.ItunesApplication.CurrentStreamTitle))
             {
@@ -176,15 +184,15 @@ namespace Winter
                     }
                 }
 
-				TextHandler.UpdateText(string.IsNullOrEmpty(track.SortName) ? track.Name : track.SortName,
-					string.IsNullOrEmpty(track.SortArtist) ? track.Artist : track.SortArtist,
-					string.IsNullOrEmpty(track.SortAlbum) ? track.Album : track.SortAlbum);
-			}
-			else if (string.IsNullOrEmpty(track.Artist) && !string.IsNullOrEmpty(track.Name) && string.IsNullOrEmpty(this.ItunesApplication.CurrentStreamTitle))
-			{
-				TextHandler.UpdateText(string.IsNullOrEmpty(track.SortName) ? track.Name : track.SortName);
-			}
-			else if (!string.IsNullOrEmpty(this.ItunesApplication.CurrentStreamTitle))
+                TextHandler.UpdateText(string.IsNullOrEmpty(track.SortName) ? track.Name : track.SortName,
+                                       _nonSortArtists.Contains(track.Artist) ? track.Artist : string.IsNullOrEmpty(track.SortArtist) ? track.Artist : track.SortArtist,
+									   string.IsNullOrEmpty(track.SortAlbum) ? track.Album : track.SortAlbum);
+            }
+            else if (string.IsNullOrEmpty(track.Artist) && !string.IsNullOrEmpty(track.Name) && string.IsNullOrEmpty(this.ItunesApplication.CurrentStreamTitle))
+            {
+                TextHandler.UpdateText(string.IsNullOrEmpty(track.SortName) ? track.Name : track.SortName);
+            }
+            else if (!string.IsNullOrEmpty(this.ItunesApplication.CurrentStreamTitle))
             {
                 TextHandler.UpdateText(this.ItunesApplication.CurrentStreamTitle);
             }
