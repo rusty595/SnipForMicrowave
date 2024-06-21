@@ -268,7 +268,7 @@ namespace Winter
 
                 if (i == 0)
                 {
-                    await Task.Delay(400);
+                    await Task.Delay(600);
                 }
 
                 if (i < maxi)
@@ -280,7 +280,7 @@ namespace Winter
                     i = 0;
                 }
 
-                await Task.Delay(100);
+                await Task.Delay(200);
             }
         }
     }
