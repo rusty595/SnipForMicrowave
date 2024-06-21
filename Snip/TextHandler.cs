@@ -250,17 +250,17 @@ namespace Winter
 
                     if (inputLine.Length <= TextScrollLengthCap)
                     {
-                        outputLines[j] = inputLines[j];
+                        outputLines[j] = inputLines[j].PadRight(TextScrollLengthCap);
                         continue;
                     }
 
                     if (i < inputLine.Length)
                     {
-                        outputLines[j] = inputLine.Substring(i, Math.Min(inputLine.Length - i, TextScrollLengthCap));
+                        outputLines[j] = inputLine.Substring(i, Math.Min(inputLine.Length - i, TextScrollLengthCap)).PadRight(TextScrollLengthCap);
                     }
                     else
                     {
-                        outputLines[j] = inputLine.Substring(0, TextScrollLengthCap);
+                        outputLines[j] = inputLine.Substring(0, TextScrollLengthCap).PadRight(TextScrollLengthCap);
                     }
                 }
 
